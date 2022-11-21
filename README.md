@@ -1,7 +1,7 @@
 # Mythic Notification
 Updated and maintained notify system. Inspired by Nopixel.
 
-![Image of Notification](https://imgur.com/zrLUdcy)
+![Image of Notification](https://imgur.com/a/W98K5iC)
 
 ## Use
 
