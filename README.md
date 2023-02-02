@@ -3,27 +3,32 @@ Updated and maintained notify system. Inspired by Nopixel.
 
 https://imgur.com/a/W98K5iC
 
-## Use
+Customizing
 
-Client Side:
-```lua
-exports['mythic_notify']:SendAlert('type', 'message')
-```
-Server Side: 
-```lua
-TriggerClientEvent('mythic_notify:client:SendAlert', source, { type = 'inform', text = 'message'})
-```
+./mythic_notify/config.js:
 
-### Notification Styles
-* Inform - 'inform'
-* Error - 'error'
-* Success - 'success'
-* Warning - 'warn'
-* Help - 'help'
+    enabled - Enable/Disable flashing emergency notifications (default: true)
+    numFlashes - Set the number of flashes (default: 5)
 
-### Client-Side Functions (All Exported)
-* SendShortAlert( type, text, style ) - Displays 1000ms (1 Second)
-* SendAlert ( type, text, style ) - Displays For 2500ms (2.5 Seconds)
-* SendLongAlert ( type, text, style ) - Displays For 5000ms (5 Seconds)
+Installation
 
-Notify System will be updated every week
+    YouTube Tutorial: https://www.youtube.com/watch?v=yrojMFfJeEo
+
+    Clone or extract this repository into your ./resources/[standalone] directory.
+
+    Replace the QBCore.Functions.Notify() function in ./qb-core/client/functions.lua:128 with the function below.
+
+function QBCore.Functions.Notify(text, textype, length)
+    if textype == "primary" then textype = "inform" end
+    if type(text) == "table" then
+        local ttext = text.text or 'Placeholder'
+        local caption = text.caption or 'Placeholder'
+        local ttype = textype or 'inform'
+        local length = length or 5000
+        exports['mythic_notify']:DoCustomHudText(ttype, ttext, length, caption)
+    else
+        local ttype = textype or 'inform'
+        local length = length or 5000
+        exports['mythic_notify']:DoCustomHudText(ttype, text, length)
+    end
+end
